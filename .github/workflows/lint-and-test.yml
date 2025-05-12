@@ -121,3 +121,6 @@ jobs:
       - name: test
         working-directory: ./api_server
         run: make test-ci
+
+      - name: Report coverage
+        uses: k1LoW/octocov-action@v1
