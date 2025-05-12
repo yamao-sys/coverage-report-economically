@@ -1,0 +1,28 @@
+coverage:
+  paths:
+    - api_server/coverage.out # NOTE: ここで指定した計測結果ファイルを読み込んで分析を行う
+  exclude:
+    - 'api_server/generated/**/*.go'
+    - 'api_server/models/**/*.go'
+    - 'api_server/openapi/**/*.go'
+    - 'api_server/test/**/*.go'
+  acceptable: current >= 60% && diff >= 0% # NOTE: カバレッジがこの数値を下回るとCIがfailする
+codeToTestRatio: # NOTE: 実装コードの行数を1とした場合のテストコード行数の比率
+  code:
+    - 'api_server/**/*.go'
+    - '!api_server/generated/**/*.go'
+    - '!api_server/models/**/*.go'
+    - '!api_server/openapi/**/*.go'
+    - '!api_server/test/**/*.go'
+  test:
+    - 'api_server/**/*_test.go'
+  acceptable: current >= 1.1 && diff >= 0 # NOTE: この数値を下回るとワークフローがfailする
+comment: # NOTE: レポート内容をコメント投稿設定
+  if: is_pull_request # PRの場合のみコメントを投稿する
+  hideFooterLink: false # フッターのoctocovのリンクを非表示にしない
+report: # NOTE: レポートの出力設定
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}/${GITHUB_REF_NAME} # レポートの出力先（GitHub ActionsのArtifactsにブランチごとに保存する）
+diff:
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}/${GITHUB_BASE_REF} # NOTE: ベースブランチとカバレッジ差分を比較する
