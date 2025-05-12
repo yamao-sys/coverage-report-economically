@@ -1,0 +1,2 @@
+# coverage-report-economically
+APIのテストカバレッジを安価に出せるようにするための方法検証
