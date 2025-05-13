@@ -48,6 +48,9 @@ jobs:
 
   Test:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
 
     services:
       db:
@@ -134,6 +137,22 @@ jobs:
 
       - name: Report coverage
         uses: k1LoW/octocov-action@v1
+        if: always()
         env:
           SANITIZED_REF: ${{ env.SANITIZED_REF }}
           SANITIZED_BASE_REF: ${{ env.SANITIZED_BASE_REF }}
+
+      - name: Setup pages
+        if: always()
+        run: |
+          mkdir -p coverage/html
+          mkdir -p coverage/html/backend
+          mv api_server/coverage.out.html coverage/html/backend/index.html
+          echo "<ul><li><a href="backend">backend</a></li></ul>" > coverage/html/index.html
+
+      - uses: rajyan/preview-pages@v1
+        if: always()
+        with:
+          source-dir: coverage/html
+          branch-per-commit: ${{ github.event_name == 'pull_request'}}
+          pr-comment: hide_and_recreate
