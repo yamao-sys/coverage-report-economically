@@ -135,8 +135,16 @@ jobs:
           SANITIZED_BASE_REF="${BASE_REF//\//_}"
           echo "SANITIZED_BASE_REF=$SANITIZED_BASE_REF" >> $GITHUB_ENV
 
+      - name: Generate reviewdog api token
+        id: test_generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.REVIEDOG_APP_ID }}
+          private_key: ${{ secrets.REVIEDOG_PRIVATE_KEY }}
+
       - name: Report coverage
         uses: k1LoW/octocov-action@v1
         env:
           SANITIZED_REF: ${{ env.SANITIZED_REF }}
           SANITIZED_BASE_REF: ${{ env.SANITIZED_BASE_REF }}
+          GITHUB_TOKEN: ${{ steps.test_generate_token.outputs.token }}
