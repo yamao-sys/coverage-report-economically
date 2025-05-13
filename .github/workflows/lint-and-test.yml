@@ -128,7 +128,12 @@ jobs:
           SANITIZED_REF="${REF_NAME//\//_}"
           echo "SANITIZED_REF=$SANITIZED_REF" >> $GITHUB_ENV
 
+          BASE_REF="${GITHUB_BASE_REF:-main}"
+          SANITIZED_BASE_REF="${BASE_REF//\//_}"
+          echo "SANITIZED_BASE_REF=$SANITIZED_BASE_REF" >> $GITHUB_ENV
+
       - name: Report coverage
         uses: k1LoW/octocov-action@v1
         env:
           SANITIZED_REF: ${{ env.SANITIZED_REF }}
+          SANITIZED_BASE_REF: ${{ env.SANITIZED_BASE_REF }}

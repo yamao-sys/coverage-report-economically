@@ -25,4 +25,4 @@ report: # NOTE: レポートの出力設定
     - artifact://${GITHUB_REPOSITORY}/${SANITIZED_REF} # レポートの出力先（GitHub ActionsのArtifactsにブランチごとに保存する）
 diff:
   datastores:
-    - artifact://${GITHUB_REPOSITORY}/${GITHUB_BASE_REF} # NOTE: ベースブランチとカバレッジ差分を比較する
+    - artifact://${GITHUB_REPOSITORY}/${SANITIZED_BASE_REF} # NOTE: ベースブランチとカバレッジ差分を比較する
