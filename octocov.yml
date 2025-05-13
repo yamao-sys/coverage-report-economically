@@ -18,6 +18,7 @@ codeToTestRatio: # NOTE: 実装コードの行数を1とした場合のテスト
     - 'api_server/**/*_test.go'
   acceptable: current >= 0.1 && diff >= 0 # NOTE: この数値を下回るとワークフローがfailする
 comment: # NOTE: レポート内容をコメント投稿設定
+  if: is_pull_request # PRの場合のみコメントを投稿する
   hideFooterLink: false # フッターのoctocovのリンクを非表示にしない
 report: # NOTE: レポートの出力設定
   datastores:
