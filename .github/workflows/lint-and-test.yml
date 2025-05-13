@@ -146,6 +146,7 @@ jobs:
         if: always()
         run: |
           mkdir -p coverage/html
+          mkdir -p coverage/html/backend
           mv api_server/coverage.out coverage/html/backend/index.html
           echo "<ul><li><a href="backend">backend</a></li></ul>" > coverage/html/index.html
 
