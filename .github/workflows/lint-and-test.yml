@@ -146,12 +146,12 @@ jobs:
         if: always()
         run: |
           mkdir -p coverage/html
-          mv api_server/coverage.out coverage/html
+          mv api_server/coverage.out coverage/html/backend
           echo "<ul><li><a href="backend">backend</li></ul>" > coverage/html/index.html
 
       - uses: rajyan/preview-pages@v1
         if: always()
         with:
           source-dir: coverage/html
-          branch-per-commit: false
+          branch-per-commit: ${{ github.event_name == 'pull_request'}}
           pr-comment: hide_and_recreate
