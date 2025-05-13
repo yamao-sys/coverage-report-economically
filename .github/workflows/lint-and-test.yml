@@ -10,44 +10,41 @@ on:
       - main
 
 jobs:
-  # Lint:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #     contents: read
+  Lint:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  #     - name: Set up Go
-  #       uses: actions/setup-go@v4
-  #       id: setup-go-lint
-  #       with:
-  #         go-version-file: ./api_server/go.mod
-  #         cache: true
-  #         cache-dependency-path: ./api_server/go.sum
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        id: setup-go-lint
+        with:
+          go-version-file: ./api_server/go.mod
+          cache: true
+          cache-dependency-path: ./api_server/go.sum
 
-  #     - name: go mod tidy
-  #       working-directory: ./api_server
-  #       if: ${{ steps.setup-go-lint.outputs.cache-hit != 'true' }}
-  #       run: go mod tidy
+      - name: go mod tidy
+        working-directory: ./api_server
+        if: ${{ steps.setup-go-lint.outputs.cache-hit != 'true' }}
+        run: go mod tidy
 
-  #     - name: Generate reviewdog api token
-  #       id: generate_token
-  #       uses: tibdex/github-app-token@v1
-  #       with:
-  #         app_id: ${{ secrets.REVIEDOG_APP_ID }}
-  #         private_key: ${{ secrets.REVIEDOG_PRIVATE_KEY }}
+      - name: Generate reviewdog api token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.REVIEDOG_APP_ID }}
+          private_key: ${{ secrets.REVIEDOG_PRIVATE_KEY }}
 
-  #     - name: Setup reviewdog
-  #       uses: reviewdog/action-setup@v1
+      - name: Setup reviewdog
+        uses: reviewdog/action-setup@v1
 
-  #     - name: lint
-  #       env:
-  #         REVIEWDOG_GITHUB_API_TOKEN: ${{ steps.generate_token.outputs.token }}
-  #       working-directory: ./api_server
-  #       run: go install honnef.co/go/tools/cmd/staticcheck@latest && staticcheck ./... | reviewdog -reporter=github-pr-review -f=staticcheck -level=warn -filter-mode=nofilter -fail-level=any
+      - name: lint
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ steps.generate_token.outputs.token }}
+        working-directory: ./api_server
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest && staticcheck ./... | reviewdog -reporter=github-pr-review -f=staticcheck -level=warn -filter-mode=nofilter -fail-level=any
 
   Test:
     runs-on: ubuntu-latest
