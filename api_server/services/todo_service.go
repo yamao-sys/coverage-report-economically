@@ -36,7 +36,7 @@ func (ts *todoService) CreateTodo(ctx context.Context, requestParams apis.PostTo
 	if validationErrors != nil {
 		return int(http.StatusBadRequest), validationErrors
 	}
-	fmt.Println("validationError", validationErrors)
+	fmt.Println("validationErrors", validationErrors)
 
 	todo := &models.Todo{}
 	todo.Title = requestParams.Title
