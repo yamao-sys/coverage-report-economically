@@ -6,6 +6,7 @@ import (
 	"app/validator"
 	"context"
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/volatiletech/null/v8"
@@ -35,6 +36,7 @@ func (ts *todoService) CreateTodo(ctx context.Context, requestParams apis.PostTo
 	if validationErrors != nil {
 		return int(http.StatusBadRequest), validationErrors
 	}
+	fmt.Println(validationErrors)
 
 	todo := &models.Todo{}
 	todo.Title = requestParams.Title
@@ -43,6 +45,7 @@ func (ts *todoService) CreateTodo(ctx context.Context, requestParams apis.PostTo
 	// NOTE: Create処理
 	err = todo.Insert(ctx, ts.db, boil.Infer())
 	if err != nil {
+		fmt.Println(err)
 		return int(http.StatusInternalServerError), err
 	}
 	return int(http.StatusOK), nil
