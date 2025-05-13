@@ -22,7 +22,7 @@ comment: # NOTE: レポート内容をコメント投稿設定
   hideFooterLink: false # フッターのoctocovのリンクを非表示にしない
 report: # NOTE: レポートの出力設定
   datastores:
-    - artifact://${GITHUB_REPOSITORY}/${GITHUB_REF_NAME} # レポートの出力先（GitHub ActionsのArtifactsにブランチごとに保存する）
+    - artifact://${GITHUB_REPOSITORY}/${GITHUB_HEAD_REF} # レポートの出力先（GitHub ActionsのArtifactsにブランチごとに保存する）
 diff:
   datastores:
     - artifact://${GITHUB_REPOSITORY}/${GITHUB_BASE_REF} # NOTE: ベースブランチとカバレッジ差分を比較する
