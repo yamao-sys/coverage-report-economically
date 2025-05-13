@@ -51,6 +51,9 @@ jobs:
 
   Test:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
 
     services:
       db:
